@@ -2,127 +2,148 @@
 .main {
     height: 100vh;
     width: 100vw;
-    background-color: #f0f2f5; /* Light grey background */
-    display: flex; /* Use flexbox for layout */
+    background-color: #f8fafc; /* Crisp modern light background */
+    display: flex;
 }
 
 /* Sidebar Styling */
 .sidebar {
-    width: 250px; /* Fixed width for the sidebar */
-    min-width: 250px;
+    width: 260px;
+    min-width: 260px;
     height: 100%;
-    background-color: #7d8b99; /* Muted grey-blue from your design */
+    background-color: #0f172a; /* Sophisticated slate navy */
     color: white;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
-    padding: 20px 0;
+    padding: 24px 0;
+    z-index: 10;
 }
 
 .logo {
     text-align: center;
     padding-bottom: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo h6 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: white;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #f8fafc;
     margin: 0;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .menu {
-    flex-grow: 1; /* Pushes logout to the bottom */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
+    gap: 4px;
+    padding: 0 12px;
 }
 
 .menu-item {
-    padding: 15px 25px;
-    transition: background-color 0.2s;
+    padding: 12px 18px;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    color: #94a3b8;
 }
 
 .menu-item:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
 }
 
 .menu-item.active {
-    background-color: #5d6d7e; /* A slightly darker shade for active */
-    border-left: 3px solid #f9c400; /* Yellow accent for active item */
-    padding-left: 22px;
+    background: linear-gradient(90deg, rgba(2, 132, 199, 0.2) 0%, rgba(2, 132, 199, 0.08) 100%);
+    border-left: 4px solid #0284c7;
+    color: #38bdf8;
+    font-weight: 600;
 }
 
 .menu-item a {
-    color: white;
+    color: inherit;
     text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 0.95rem;
+    flex-grow: 1;
 }
 
 .menu-item i {
-    margin-right: 15px;
+    margin-right: 14px;
     font-size: 1.1rem;
-    width: 20px; /* Align icons */
+    width: 20px;
     text-align: center;
 }
 
 .logout-item {
-    margin-top: auto; /* Pushes this item to the bottom */
+    margin-top: auto;
+    color: #f87171;
+    border-radius: 8px;
 }
 
+.logout-item:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
 
 /* Main Content Area */
 .content {
-    flex-grow: 1; /* Takes up remaining space */
-    padding: 20px;
+    flex-grow: 1;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Enable scrolling for content */
+    overflow-y: auto;
 }
 
 .header {
-    background-color: white;
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    padding: 14px 24px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
 }
 
 .header-content {
     display: flex;
-    justify-content: flex-end; /* Pushes content to the right */
+    justify-content: flex-end;
     align-items: center;
 }
 
 .header-content .ant-badge {
-    margin-right: 25px;
     cursor: pointer;
+    font-size: 1.1rem;
 }
 
 .header-content i {
-    font-size: 1.5rem;
-    color: #555;
+    font-size: 1.25rem;
+    color: #475569;
+    transition: color 0.2s;
+}
+
+.header-content i:hover {
+    color: #0284c7;
 }
 
 .header-content a {
-    color: #333;
+    color: #1e293b;
     font-weight: 600;
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 .body {
     flex-grow: 1;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Helper classes used in forms */
+/* Helper classes */
 .text-center {
   text-align: center;
 }
@@ -135,12 +156,18 @@
 }
 
 .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #0284c7;
+  border-color: #0284c7;
   color: white;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   border: none;
   font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #0369a1;
 }

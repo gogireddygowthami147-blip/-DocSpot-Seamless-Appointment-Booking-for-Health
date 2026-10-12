@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout.jsx";
 import axios from "axios";
-import { Table, message } from "antd";
+import { Table, message, Tag, Button, Space, Card } from "antd";
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  //getDoctors
+  // getDoctors
   const getDoctors = async () => {
     try {
+      setLoading(true);
       const res = await axios.get("/api/v1/admin/getAllDoctors", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      setLoading(false);
       if (res.data.success) {
         setDoctors(res.data.data);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
+      message.error("Failed to fetch doctors list");
     }
   };
   
@@ -36,10 +41,13 @@ const Doctors = () => {
       );
       if (res.data.success) {
         message.success(res.data.message);
-        window.location.reload();
+        getDoctors();
+      } else {
+        message.error(res.data.message);
       }
     } catch (error) {
-      message.error("Something Went Wrong");
+      console.log(error);
+      message.error("Something went wrong updating doctor status");
     }
   };
 
@@ -49,41 +57,104 @@ const Doctors = () => {
 
   const columns = [
     {
-      title: "Name",
+      title: "Doctor Name",
       dataIndex: "name",
       render: (text, record) => (
-        <span>
-          {record.firstName} {record.lastName}
+        <span style={{ fontWeight: 600 }}>
+          Dr. {record.firstName} {record.lastName}
         </span>
       ),
     },
     {
-      title: "Status",
-      dataIndex: "status",
+      title: "Specialization",
+      dataIndex: "specialization",
+      render: (text, record) => <Tag color="blue">{record.specialization}</Tag>,
+    },
+    {
+      title: "Experience",
+      dataIndex: "experience",
+      render: (text, record) => <span>{record.experience} Yrs</span>,
+    },
+    {
+      title: "Fees (₹)",
+      dataIndex: "feesPerConsultation",
+      render: (text, record) => <span>₹{record.feesPerConsultation}</span>,
     },
     {
       title: "Phone",
       dataIndex: "phone",
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      render: (text, record) => {
+        let color = "gold";
+        if (record.status === "approved") color = "green";
+        if (record.status === "rejected") color = "red";
+        return (
+          <Tag color={color} style={{ textTransform: "capitalize", padding: "4px 8px" }}>
+            {record.status}
+          </Tag>
+        );
+      },
+    },
+    {
       title: "Actions",
       dataIndex: "actions",
       render: (text, record) => (
-        <div className="d-flex">
-          {record.status === "pending" ? (
-            <button className="btn btn-success" onClick={() => handleAccountStatus(record, "approved")}>Approve</button>
-          ) : (
-            <button className="btn btn-danger">Reject</button>
+        <Space>
+          {record.status === "pending" && (
+            <>
+              <Button
+                type="primary"
+                size="small"
+                style={{ backgroundColor: "#059669", borderColor: "#059669" }}
+                onClick={() => handleAccountStatus(record, "approved")}
+              >
+                Approve
+              </Button>
+              <Button
+                danger
+                size="small"
+                onClick={() => handleAccountStatus(record, "rejected")}
+              >
+                Reject
+              </Button>
+            </>
           )}
-        </div>
+          {record.status === "approved" && (
+            <Button
+              danger
+              size="small"
+              onClick={() => handleAccountStatus(record, "rejected")}
+            >
+              Revoke / Reject
+            </Button>
+          )}
+          {record.status === "rejected" && (
+            <Button
+              type="primary"
+              size="small"
+              style={{ backgroundColor: "#059669", borderColor: "#059669" }}
+              onClick={() => handleAccountStatus(record, "approved")}
+            >
+              Re-approve
+            </Button>
+          )}
+        </Space>
       ),
     },
   ];
 
   return (
     <Layout>
-      <h1 className="text-center m-3">All Doctors</h1>
-      <Table columns={columns} dataSource={doctors} rowKey="_id" />
+      <Card bordered={false} style={{ borderRadius: "12px", boxShadow: "0 4px 12px rgba(0,0,0,0.04)" }}>
+        <h2 style={{ marginBottom: "20px", color: "#1e293b" }}>
+          <i className="fa-solid fa-user-doctor" style={{ marginRight: "10px", color: "#0284c7" }}></i>
+          All Registered Doctors
+        </h2>
+        <Table columns={columns} dataSource={doctors} rowKey="_id" loading={loading} pagination={{ pageSize: 8 }} />
+      </Card>
     </Layout>
   );
 };

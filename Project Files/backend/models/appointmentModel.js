@@ -11,11 +11,11 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
     doctorInfo: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
       required: true,
     },
     userInfo: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
       required: true,
     },
     date: {

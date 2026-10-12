@@ -15,7 +15,13 @@ import Register from './pages/Register.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ApplyDoctor from './pages/ApplyDoctor.jsx';
 import Appointments from './pages/Appointments.jsx';
+import BookingPage from './pages/BookingPage.jsx';
+import NotificationPage from './pages/NotificationPage.jsx';
 import Profile from './pages/Profile.jsx';
+
+// --- Doctor Pages ---
+import DoctorAppointments from './pages/doctor/DoctorAppointments.jsx';
+import DoctorProfile from './pages/doctor/Profile.jsx';
 
 // --- Admin Pages ---
 import Users from './pages/admin/Users.jsx';
@@ -37,15 +43,23 @@ function App() {
             <Route path='/register' element={<PublicRoute><Register /></PublicRoute>} />
 
             {/* ======================================== */}
-            {/* USER (PRIVATE) ROUTES                  */}
+            {/* USER (PATIENT) ROUTES                   */}
             {/* ======================================== */}
             <Route path='/dashboard' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
             <Route path='/apply-doctor' element={<ProtectedRoute><ApplyDoctor /></ProtectedRoute>} />
             <Route path='/appointments' element={<ProtectedRoute><Appointments /></ProtectedRoute>} />
+            <Route path='/book-appointment/:doctorId' element={<ProtectedRoute><BookingPage /></ProtectedRoute>} />
+            <Route path='/notification' element={<ProtectedRoute><NotificationPage /></ProtectedRoute>} />
             <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             
             {/* ======================================== */}
-            {/* ADMIN (PRIVATE) ROUTES                 */}
+            {/* DOCTOR ROUTES                          */}
+            {/* ======================================== */}
+            <Route path='/doctor-appointments' element={<ProtectedRoute><DoctorAppointments /></ProtectedRoute>} />
+            <Route path='/doctor/profile' element={<ProtectedRoute><DoctorProfile /></ProtectedRoute>} />
+
+            {/* ======================================== */}
+            {/* ADMIN ROUTES                           */}
             {/* ======================================== */}
             <Route path='/admin/appointments' element={<ProtectedRoute><AdminAppointments /></ProtectedRoute>} />
             <Route path='/admin/users' element={<ProtectedRoute><Users /></ProtectedRoute>} />
